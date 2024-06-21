@@ -1,4 +1,4 @@
-import { Paylaod, botCreator } from '../core/bots/Bot';
+import { BotData, botCreator } from '../core/bots/Bot';
 import { Message } from '../core/messages/Message';
 import { chatWindow as ChatWindow } from './ChatWindow.js';
 import { chatInput as ChatInput } from './ChatInput.js';
@@ -9,7 +9,7 @@ import { BotServiceAdapter } from '../adapters/BotServiceAdapter.js';
 import { MessageServiceAdapter } from '../adapters/MessageServiceAdapter.js';
 
 
-export function ChatApp(botData: Paylaod[]) {
+export function ChatApp(bots: BotData[]) {
   const appContainer = document.createElement('div');
   appContainer.className = 'chat-app flex';
 
@@ -18,7 +18,7 @@ export function ChatApp(botData: Paylaod[]) {
   const botManager = new BotManager(botService);
   const messageManager = new MessageManager(messageService);
 
-  botCreator(botData).forEach(bot => botManager.addBot(bot));
+  botCreator(bots).forEach(bot => botManager.addBot(bot));
 
   const chatWindowContainer = document.createElement('div');
   const chatSection = document.createElement('div');
@@ -29,17 +29,20 @@ export function ChatApp(botData: Paylaod[]) {
     chatWindowContainer.innerHTML = '';
     const chatWindow = ChatWindow(messageManager.getMessages());
     chatWindowContainer.appendChild(chatWindow);
+    chatWindow.scrollTo({
+      top: chatWindow.scrollHeight,
+    })
   }
 
   function handleSendMessage(message: string) {
     const newMessage = new Message(message, 'Vous', "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg", false);
     messageManager.addMessage(newMessage);
     const [command, ...params] = message.split(' ')
-    botManager.executeCommand(command, params.join()).then(responses => {
+    botManager.executeCommand(command, params.join(' ')).then(responses => {
       responses.forEach(data => {
         const botRespond =  botManager.getBot(data.botId)
         if (botRespond) {
-          messageManager.addMessage(new Message(data.response, botRespond.getName(), botRespond.getAvatar(), true))
+          messageManager.addMessage(new Message(data.response || "Désolé, je ne peux pas donner suite à votre demande.", botRespond.getName(), botRespond.getAvatar(), true))
         }
       })
       renderChatWindow();

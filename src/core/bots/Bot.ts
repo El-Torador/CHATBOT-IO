@@ -38,12 +38,12 @@ export class Bot {
   }
 }
 
-export type Paylaod = {
+export type BotData = {
   name: string;
   avatar: string;
   actions: BotAction[];
 }
 
-export function botCreator(data: Paylaod[]) {
+export function botCreator(data: BotData[]) {
   return data.map(d => new Bot(d.name, d.avatar, d.actions));
 }

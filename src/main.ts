@@ -1,10 +1,7 @@
 import { ChatApp } from './components/ChatApp.js';
-import { Paylaod } from './core/bots/Bot.js';
-
-// Define your bots here
-const botData: Paylaod[] = []
+import { BOTS } from './utils/actions.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = ChatApp(botData);
+  const app = ChatApp(BOTS);
   document.getElementById('app')!.appendChild(app);
 });
