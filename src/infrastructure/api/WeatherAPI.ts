@@ -37,7 +37,8 @@ type Translation = {
 const headers = {
   'Content-Type': 'application/json',
   'x-api-key': import.meta.env.VITE_WEATHER_API_KEY as string,
-  'Accept-Language': 'FR'
+  'Accept-Language': 'FR',
+  mode: 'cors'
 }
 const HOST_DEEPL = import.meta.env.MODE === 'development' ? `/deepl` : 'https://api-free.deepl.com'
 const HOST_WEATHER = import.meta.env.MODE === 'development' ? `/api` : 'https://api.ambeedata.com'
@@ -75,7 +76,8 @@ export async function translateTo(text: string, target_lang: string = "FR") {
     }),
     headers: {
       Authorization: `DeepL-Auth-Key ${import.meta.env.VITE_DEEPL_API_KEY as string}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      mode: 'cors'
     }
   })
 
