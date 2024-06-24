@@ -1,7 +1,6 @@
 const headers = {
 		'x-rapidapi-key': import.meta.env.VITE_RAPPID_API_KEY as string,
-		'x-rapidapi-host': import.meta.env.VITE_RAPPID_HOST as string,
-    mode: 'cors'
+		'x-rapidapi-host': import.meta.env.VITE_RAPPID_HOST as string
 	}
 const HOST = import.meta.env.MODE === 'development' ? `/rappid` : 'https://twinword-word-graph-dictionary.p.rapidapi.com'
 export async function getMeaningWord(word: string): Promise<string> {

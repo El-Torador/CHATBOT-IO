@@ -3,7 +3,7 @@ import { formatRelativeTime } from '../utils/formatDate';
 
 export function chatWindow(messages: Message[]): HTMLDivElement {
   const chatWindow = document.createElement('div');
-  chatWindow.className = 'messages-container flex flex-col max-h-[880px] overflow-y-auto p-10 relative';
+  chatWindow.className = 'messages-container flex flex-col max-h-[950px] overflow-y-auto p-10 relative';
 
   messages.forEach(msg => {
     const chatMessage = document.createElement('div');
